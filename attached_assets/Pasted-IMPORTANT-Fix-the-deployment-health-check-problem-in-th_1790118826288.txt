@@ -1,0 +1,48 @@
+IMPORTANT: Fix the deployment health-check problem in this project without breaking any existing functionality.
+
+CURRENT PROBLEM:
+The deployed app is failing its health check with this error:
+"healthcheck failed error=healthcheck /api returned status 500"
+
+GOAL:
+Make the production deployment healthy and make sure the /api health-check endpoint returns a successful HTTP response.
+
+INSTRUCTIONS:
+
+1. First inspect the ENTIRE existing project structure and understand how the current application works.
+2. Do NOT rebuild the project from scratch.
+3. Do NOT remove, rename, or disable any existing features.
+4. Do NOT change the existing user interface unless it is absolutely necessary for this fix.
+5. Find exactly why the /api endpoint is returning HTTP 500.
+6. Check the server startup code, API routes, environment variables, database/configuration dependencies, and error handling that could cause the /api request to fail.
+7. Fix the actual root cause instead of hiding the error.
+8. If /api is intended to be a health/status endpoint, make it return HTTP 200 when the application is running correctly.
+9. The health endpoint must NOT depend on optional services or user-uploaded files.
+10. Do not expose secrets, API keys, passwords, or private environment variables in the response.
+11. Keep the existing image-to-PDF functionality completely working:
+    - image upload
+    - multiple images
+    - image thumbnails
+    - reorder images
+    - remove images
+    - page-size selection
+    - PDF generation
+    - PDF download
+12. Do not remove or alter the existing passport-photo sizing functionality if it already exists.
+13. After making the fix, run the project's available tests/build/checks.
+14. Test the /api endpoint locally and confirm that it returns HTTP 200.
+15. Also verify that the main website still loads successfully.
+16. If there are deployment-specific configuration problems, fix them using the existing project structure rather than replacing the application.
+17. Do not make unrelated improvements or add new features.
+
+IMPORTANT:
+Before changing anything, inspect the existing code and identify the root cause.
+Make the SMALLEST SAFE changes necessary to fix the deployment health-check failure.
+
+At the end, clearly report:
+- What caused the /api 500 error
+- What files were changed
+- What was fixed
+- Whether /api now returns HTTP 200
+- Whether the existing image-to-PDF features were preserved
+- Whether the project build/tests passed

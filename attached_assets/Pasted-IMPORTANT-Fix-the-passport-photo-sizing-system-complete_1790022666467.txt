@@ -1,0 +1,99 @@
+IMPORTANT: Fix the passport photo sizing system completely. This is the ONLY change I want. Do not redesign the website and do not modify existing working features.
+
+CURRENT BUG:
+The exported PDF page is A4 size (8.27 x 11.69 inches), which is correct, but the actual passport photos for different size options appear to have the same physical dimensions. For example, 35x45 mm and 2x2 inch look the same in Print Preview. This means the photo dimensions are not being correctly calculated in the PDF.
+
+REQUIREMENT:
+The A4 sheet must remain exactly:
+210 x 297 mm
+8.27 x 11.69 inches
+
+But each individual photo placed ON that A4 sheet must have the exact selected physical dimensions.
+
+Implement these exact photo sizes:
+
+1. Passport 35 x 45 mm
+   - width: exactly 35 mm
+   - height: exactly 45 mm
+
+2. Square 35 x 35 mm
+   - width: exactly 35 mm
+   - height: exactly 35 mm
+
+3. Photo 40 x 60 mm
+   - width: exactly 40 mm
+   - height: exactly 60 mm
+
+4. US 2 x 2 inch
+   - width: exactly 50.8 mm
+   - height: exactly 50.8 mm
+
+IMPORTANT TECHNICAL REQUIREMENT:
+Do NOT use the browser's CSS pixel size as the final physical size.
+The PDF generator must place each image using real physical PDF units.
+
+Use this conversion:
+1 inch = 72 PDF points
+1 inch = 25.4 mm
+Therefore:
+PDF points = mm × 72 / 25.4
+
+Examples:
+35 mm = 99.2126 PDF points
+45 mm = 127.5591 PDF points
+40 mm = 113.3858 PDF points
+60 mm = 170.0787 PDF points
+50.8 mm = 144 PDF points
+
+The generated PDF must use these physical dimensions when placing each individual photo.
+
+MULTIPLE COPIES:
+Keep the existing 4, 6, 10 and 12 copies options.
+
+When the user selects a number of copies:
+- Place that exact number of photos on the A4 page.
+- Every copy must have the selected physical dimensions.
+- Automatically arrange them on the A4 page with appropriate spacing.
+- Never resize the photos just to make them fill the page.
+- If the selected number of copies cannot physically fit on one A4 page at the selected photo size, handle this correctly by creating another A4 page rather than changing the photo dimensions.
+
+IMAGE PROPORTION:
+- Do not stretch the image.
+- Do not distort faces.
+- Preserve the selected photo's aspect ratio.
+- If cropping is required to fit the selected passport ratio, crop proportionally and center the image.
+- The final PHOTO BOX itself must always remain exactly the selected physical dimensions.
+
+PRINT ACCURACY:
+The exported PDF must be print-ready.
+The A4 page must be exactly 210 x 297 mm.
+The individual photo dimensions must remain exact when checked in PDF/print preview at 100% / actual size.
+
+VERY IMPORTANT:
+Do not confuse the A4 document size with the photo size.
+The print preview may show the whole A4 page as approximately 8.27 x 11.69 inches. That is correct.
+What must change between options is the physical size of EACH PHOTO on that A4 page.
+
+TEST THESE FOUR CASES BEFORE FINISHING:
+- 35x45 mm with 6 copies
+- 35x35 mm with 6 copies
+- 40x60 mm with 6 copies
+- 2x2 inch with 6 copies
+
+Verify that these four cases produce visibly and mathematically different individual photo sizes.
+
+DO NOT CHANGE:
+- Image upload
+- Multiple image upload
+- Image thumbnails
+- Reordering
+- Delete/remove
+- A4 option
+- US Letter option
+- Fit to image option
+- Existing working UI
+- Existing download functionality
+
+Only fix the passport photo physical sizing and layout system.
+
+After implementing, test the complete export flow and make sure the downloaded PDF contains the correct physical dimensions.
